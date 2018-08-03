@@ -6,9 +6,6 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Input from '../../../components/UI/Input/Input';
 class ContactData extends Component
 {
-
-   
-    
  state={
     orderForm:{
         
@@ -22,7 +19,8 @@ class ContactData extends Component
                 validation:{
                     required:true
                 },
-                valid:false
+                valid:false,
+                touched:false
             },
             street :{
                 elementType:'input',
@@ -34,7 +32,8 @@ class ContactData extends Component
                 validation:{
                     required:true
                 },
-                valid:false
+                valid:false,
+                touched:false
             }, 
             zipCode: {
                 elementType:'input',
@@ -48,7 +47,8 @@ class ContactData extends Component
                     minLength:5,
                     maxLenght:5
                 },
-                valid:false
+                valid:false,
+                touched:false
             },
             country: {
                 elementType:'input',
@@ -60,7 +60,8 @@ class ContactData extends Component
                 validation:{
                     required:true
                 },
-                valid:false
+                valid:false,
+                touched:false
             },
             email: {
                 elementType:'input',
@@ -72,7 +73,8 @@ class ContactData extends Component
                 validation:{
                     required:true
                 },
-                valid:false
+                valid:false,
+                touched:false
             },    
             deliveryMethod: {
                 elementType:'select',
@@ -81,10 +83,12 @@ class ContactData extends Component
                    {value:'cheapest',displayValue:'Cheapest'}
                 ]
                 },
-                value:'',
-               
+                validation:{},
+                value:'fastest',
+               valid:true
             },
     },
+      formIsValid:false,
      loading:false
  }
  
@@ -130,6 +134,7 @@ class ContactData extends Component
 }
 
 inputChangedHandler=(event,inputIdentifier)=>{
+
 const updatedOrderForm={
     ...this.state.orderForm
 };
@@ -138,8 +143,14 @@ const updatedFormEl={
 };
 updatedFormEl.value=event.target.value;
 updatedFormEl.valid=this.checkValiditiy(updatedFormEl.value,updatedFormEl.validation)
+updatedFormEl.touched=true;
 updatedOrderForm[inputIdentifier]=updatedFormEl;
-this.setState({orderForm:updatedOrderForm});
+let formIsValid=true;
+for(let inputIdentifier in updatedOrderForm)
+{
+    formIsValid= updatedOrderForm[inputIdentifier].valid&&formIsValid
+}
+this.setState({orderForm:updatedOrderForm,formIsValid:formIsValid});
 console.log(updatedFormEl.value);
 }
 
@@ -157,12 +168,15 @@ console.log(updatedFormEl.value);
         {formElementsArray.map(formEl=>(
           <Input 
           key={formEl.id} 
+          invalid={!formEl.config.valid}
           elementType={formEl.config.elementType}
            elementConfig={formEl.config.elementConfig} 
+           shouldValidate={formEl.config.validation}
            value={formEl.config.value}
+           touched={formEl.config.touched}
            changed={(event)=>this.inputChangedHandler(event,formEl.id)}/>  
         ))}
-        <Button btnType="Success" >ORDER</Button>
+        <Button btnType="Success" disabled={!this.state.formIsValid} >ORDER</Button>
         </form>
      );
      if(this.state.loading)
