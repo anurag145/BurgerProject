@@ -19,10 +19,11 @@ return <div className={classes.BuildControls}>
         disabled={props.disabled[ctrl.type]}
         />
     })}
+
+    
     <button className={classes.OrderButton}
      disabled={!props.purchaseable}
-     onClick={props.ordered}>
-     ORDER NOW</button>
+     onClick={props.ordered}>{props.isAuth?'ORDER NOW':'SIGN IN TO ORDER'}</button>
 </div>
 
 };

@@ -48,9 +48,11 @@ class ContactData extends Component
                 validation:{
                     required:true,
                     minLength:5,
-                    maxLenght:5
+                    maxLength:5,
+                    isNumeric:true
                 },
                 valid:false,
+                
                 touched:false
             },
             country: {
@@ -74,7 +76,8 @@ class ContactData extends Component
                 },
                 value:'',
                 validation:{
-                    required:true
+                    required:true,
+                    isEmail:true
                 },
                 valid:false,
                 touched:false
@@ -105,27 +108,49 @@ class ContactData extends Component
          formData[formElId]=this.state.orderForm[formElId].value;
          console.log(this.state.orderForm[formElId].value);
      }
-     console.log(formData);
          const order = {
              ingredient:this.props.ings,
              price:this.props.totalPrice, // calculate on server side.
-             orderData:formData
+             orderData:formData,
+             userId: this.props.userId
          }
+         console.log(order);
 
-         this.props.onOrderBurger(order);
+
+         this.props.onOrderBurger(order,this.props.token);
          
  
  }
  checkValiditiy=(value,rules)=>{
-    let isValid=true;
-     if(rules.required) 
-     isValid=value.trim()!==''&&isValid;
-      
-     if(rules.minLength)
-     isValid= value.length >=rules.minLength&&isValid;
-     if(rules.maxLength)
+    let isValid = true;
+        if (!rules) {
+            return true;
+        }
+        console.log(rules);
+        if (rules.required) {
+            isValid = value.trim() !== '' && isValid;
+        }
 
-     isValid= value.length <=rules.maxLength&&isValid;
+        if (rules.minLength) {
+            isValid = value.length >= rules.minLength && isValid
+        }
+
+        if (rules.maxLength) {
+            console.log("I am here");
+            isValid = value.length <= rules.maxLength && isValid
+        }
+
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rules.isNumeric) {
+            console.log("I am here");
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
+
      return isValid;
 }
 
@@ -191,14 +216,15 @@ const mapStatetoProps= state=>{
     return{
         ings:state.burgerBuilder.ingredients,
         totalPrice:state.burgerBuilder.totalPrice,
-        loading:state.order.loading
-        
+        loading:state.order.loading,
+        token:state.auth.token,
+        userId:state.auth.userId
     }
     };
 
     const mapsDispatchToProps = dispatch =>{
         return {
-            onOrderBurger: (orderData)=>dispatch(actions.purchaseBurger(orderData))
+            onOrderBurger: (orderData,token)=>dispatch(actions.purchaseBurger(orderData,token))
     };
 };
     

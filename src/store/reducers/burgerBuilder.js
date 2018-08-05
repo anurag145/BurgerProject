@@ -3,7 +3,9 @@ import updateObject from '../utility';
 const initialState={
     ingredients: null,
     totalPrice: 4,
-    error:false
+    error:false,
+    building: false
+
     
 };
 
@@ -14,6 +16,7 @@ const INGREDIENT_PRICES={
     meat:1.3
 }
 
+
 const reducer = (state=initialState,action)=>{
     let updatedIngredient,updatedIngredients,updatedState;
   switch(action.type)
@@ -22,7 +25,8 @@ const reducer = (state=initialState,action)=>{
     updatedIngredients = updateObject(state.ingredients,updatedIngredient)
      updatedState={
         ingredients:updatedIngredients,
-        totalPrice:state.totalPrice+INGREDIENT_PRICES[action.ingredientName]
+        totalPrice:state.totalPrice+INGREDIENT_PRICES[action.ingredientName],
+        building:true
     }
       return updateObject(state,updatedState);
       case actionTypes.REMOVE_INGREDIENT:
@@ -30,7 +34,8 @@ const reducer = (state=initialState,action)=>{
        updatedIngredients = updateObject(state.ingredients,updatedIngredient)
        updatedState={
           ingredients:updatedIngredients,
-          totalPrice:state.totalPrice+INGREDIENT_PRICES[action.ingredientName]
+          totalPrice:state.totalPrice-INGREDIENT_PRICES[action.ingredientName],
+          building:true
       }
         return updateObject(state,updatedState);
       case actionTypes.SET_INGREDIENT:
@@ -41,7 +46,9 @@ const reducer = (state=initialState,action)=>{
         cheese:action.ingredients.cheese,
         meat:action.ingredients.meat
         
+        
       },
+      building:false,
       totalPrice:4,
     error:false
 

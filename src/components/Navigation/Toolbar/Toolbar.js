@@ -10,7 +10,7 @@ return <header className={classes.Toolbar}>
     <Logo />
     </div>
     <nav className={classes.DesktopOnly}>
-        <NavigationItems />
+        <NavigationItems isAuthenticated={props.isAuth} />
     </nav>
     </header>
 
