@@ -58,7 +58,7 @@ class Auth extends Component{
             if (!rules) {
                 return true;
             }
-            console.log(rules);
+           
             if (rules.required) {
                 isValid = value.trim() !== '' && isValid;
             }
@@ -68,7 +68,7 @@ class Auth extends Component{
             }
     
             if (rules.maxLength) {
-                console.log("I am here");
+               
                 isValid = value.length <= rules.maxLength && isValid
             }
     
@@ -78,7 +78,7 @@ class Auth extends Component{
             }
     
             if (rules.isNumeric) {
-                console.log("I am here");
+                
                 const pattern = /^\d+$/;
                 isValid = pattern.test(value) && isValid
             }
@@ -103,7 +103,7 @@ class Auth extends Component{
         //     formIsValid= updatedControls[inputIdentifier].valid&&formIsValid
         // }
         this.setState({controls:updatedControls});
-        console.log(updatedFormEl.value);
+      
         }
 
         onSubmitHandler = (event)=>{

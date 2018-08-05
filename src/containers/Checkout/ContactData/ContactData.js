@@ -106,7 +106,7 @@ class ContactData extends Component
      for(let formElId in this.state.orderForm)
      {
          formData[formElId]=this.state.orderForm[formElId].value;
-         console.log(this.state.orderForm[formElId].value);
+        
      }
          const order = {
              ingredient:this.props.ings,
@@ -114,7 +114,7 @@ class ContactData extends Component
              orderData:formData,
              userId: this.props.userId
          }
-         console.log(order);
+        
 
 
          this.props.onOrderBurger(order,this.props.token);
@@ -126,7 +126,7 @@ class ContactData extends Component
         if (!rules) {
             return true;
         }
-        console.log(rules);
+       
         if (rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
@@ -136,7 +136,7 @@ class ContactData extends Component
         }
 
         if (rules.maxLength) {
-            console.log("I am here");
+           
             isValid = value.length <= rules.maxLength && isValid
         }
 
@@ -146,7 +146,7 @@ class ContactData extends Component
         }
 
         if (rules.isNumeric) {
-            console.log("I am here");
+           
             const pattern = /^\d+$/;
             isValid = pattern.test(value) && isValid
         }
@@ -172,7 +172,7 @@ for(let inputIdentifier in updatedOrderForm)
     formIsValid= updatedOrderForm[inputIdentifier].valid&&formIsValid
 }
 this.setState({orderForm:updatedOrderForm,formIsValid:formIsValid});
-console.log(updatedFormEl.value);
+
 }
 
  render(){

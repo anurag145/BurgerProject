@@ -14,7 +14,7 @@ export const purchaseBurgerFail = (error)=>{
  };
 };
 export const purchaseBurgerStart =()=>{
-    console.log("I am here, purchaseBurgerStart");
+    
 return {
 type: actionTypes.PURCHASE_BURGER_START
 };

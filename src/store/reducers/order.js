@@ -15,7 +15,7 @@ switch(action.type)
     }
 
     case actionTypes.PURCHASE_BURGER_START:
-    console.log("I am here")
+    
         return {
         ...state,
         loading:true
