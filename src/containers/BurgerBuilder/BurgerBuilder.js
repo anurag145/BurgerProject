@@ -12,7 +12,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../store/actions';
 
 
-class BurgerBuilder extends Component{
+export class BurgerBuilder extends Component{
    state={
      
      purchaseable:false,
